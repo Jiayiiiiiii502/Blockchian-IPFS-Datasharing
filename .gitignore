@@ -1,0 +1,13 @@
+blockchain/channel-artifacts/
+blockchain/crypto-config/
+blockchain/ipfs/
+blockchain/chaincode/datashare
+application/server/files/downloadfiles
+application/server/files/uploadfiles
+# files
+blockchain/tape/config.yaml
+blockchain/tape/Tape.log
+blockchain/explorer/connection-profile/test-network.json
+.DS_Store
+nohup.out
+!.gitkeep

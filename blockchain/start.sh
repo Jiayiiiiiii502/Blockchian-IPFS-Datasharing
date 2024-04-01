@@ -1,4 +1,4 @@
-# clean previous blockchain network
+#清理之前的网络
 docker-compose -f explorer/docker-compose.yaml down -v
 docker-compose -f docker-compose-byfn.yaml down -v
 rm -rf channel-artifacts
