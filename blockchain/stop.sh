@@ -1,5 +1,5 @@
 #!/bin/bash
-# 清除链码容器
+# clean chaincode container in docker
 function clearContainers() {
   CONTAINER_IDS=$(docker ps -a | awk '($2 ~ /dev-peer.*datashare.*/) {print $1}')
   if [ -z "$CONTAINER_IDS" -o "$CONTAINER_IDS" == " " ]; then
@@ -9,7 +9,7 @@ function clearContainers() {
   fi
 }
 
-# 清除链码镜像
+# clean chaincode mirror
 function removeUnwantedImages() {
   DOCKER_IMAGE_IDS=$(docker images | awk '($1 ~ /dev-peer.*datashare.*/) {print $3}')
   if [ -z "$DOCKER_IMAGE_IDS" -o "$DOCKER_IMAGE_IDS" == " " ]; then
@@ -20,15 +20,15 @@ function removeUnwantedImages() {
 }
 
 
-#清理之前的网络
+# clean previous blockchain network
 docker-compose -f explorer/docker-compose.yaml down -v
 docker-compose -f docker-compose-byfn.yaml down -v
 
-#清理网络相关材料
+# clean other files related to blockchain
 rm -rf channel-artifacts
 rm -rf crypto-config
 
-#清理链码容器
+# clean containers in docker
 clearContainers
 removeUnwantedImages
 
