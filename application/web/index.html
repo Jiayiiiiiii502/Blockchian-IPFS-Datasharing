@@ -51,7 +51,7 @@
         
         <el-main v-show="this.router=='首页'">
             <div class="texthome">
-                <h1 style="height: 100px;color: #409EFF;">基于区块链与IPFS的数据共享系统</h1>
+                <h1 style="height: 100px;color: #409EFF;">SharingFree</h1>
                 <p style="color:#909399;text-indent:37px ; text-align: left;">本系统使用RSA算法生成密钥对，
                     RSA私钥用于用户身份认证；用户发送的数据将存储于IPFS，
                     IPFS返回的CID（IPFS Hash）使用用户的RSA私钥加密后存储于区块链;
@@ -285,8 +285,10 @@
                     dialogTableVisible: false
                 },
                 //public
-                url: '1.14.74.234:9090/',
-                blokchainbrowserurl:'1.14.74.234:8080/'
+                url: 'http://1.14.74.234:9090/',
+                blokchainbrowserurl: 'http://1.14.74.234:8080/'
+                // url: '1.14.74.234:9090/',
+                // blokchainbrowserurl:'1.14.74.234:8080/'
             }
         },
         computed: {
@@ -308,8 +310,13 @@
         },
 
         //methods of home page
+        // openBloBro(){
+        //     window.open(vm.blokchainbrowserurl)
+        // },
         openBloBro(){
-            window.open(vm.blokchainbrowserurl)
+            setTimeout(() => {
+                window.open(vm.blokchainbrowserurl);
+            }, 1000); // 延迟 1 秒后调用 window.open
         },
         changeFixed(clientHeight){ //动态修改样式
         console.log(clientHeight);
@@ -379,8 +386,8 @@
                     vm.$message.warning(response.response.data)
                     vm.loading=false
                 },
-                // vm.send.sendForm.dialogVisible_txid = false,
-                // vm.$message.warning("服务器错误"),
+                vm.send.sendForm.dialogVisible_txid = false,
+                vm.$message.warning("服务器错误"),
             );
         },
         handleExceed() {

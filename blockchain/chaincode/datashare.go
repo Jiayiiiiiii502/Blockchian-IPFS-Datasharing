@@ -77,8 +77,10 @@ func (s *SmartContract) sendData(APIstub shim.ChaincodeStubInterface, args []str
 	time := time.Unix(timesecond+28800, 0).Format("2006-01-02 15:04:05")
 
 	//实例化Record结构体并使用传入的参数赋值
+	//Instantiate the Record structure and assign values using the passed parameters
 	var record = Record{Sender: args[0], Receiver: args[1], SenderEncrypted_cid: args[2], ReceiverEncrypted_cid: args[3], Filename: args[4], Timestamp: time, Txid: APIstub.GetTxID()}
 	//将数据传输记录保存到发送方的记录中
+	//Save data transfer record to sender's record
 	recordsAsBytes_sender, err := APIstub.GetState(args[0])
 	if err != nil {
 		return shim.Error(err.Error())
@@ -94,6 +96,7 @@ func (s *SmartContract) sendData(APIstub shim.ChaincodeStubInterface, args []str
 	APIstub.PutState(args[0], recordsAsBytes_sender)
 
 	//将数据传输记录保存到接受者的记录中
+	//Save data transfer record to recipient's record
 	recordsAsBytes_receiver, err := APIstub.GetState(args[1])
 	if err != nil {
 		return shim.Error(err.Error())
