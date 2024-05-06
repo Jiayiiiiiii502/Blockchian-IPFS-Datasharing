@@ -4,6 +4,7 @@ version: 1.0.0
 client:
   # 客户端所属的组织，必须是organizations定义的组织
   organization: Org1
+  #organization: Org2
   # 日志级别
   logging:
     level: info

@@ -122,6 +122,7 @@ func RsaDecryptByBase64(base64CipherText, base64PriKey string) (plainText []byte
 	return rsaDecrypt(cipherTextBytes, privateBytes)
 }
 
+// find public key by private key
 func SktoPub(sk string) (pk string, err error) {
 	//base64.StdEncoding.EncodeToString(x509.MarshalPKCS1PrivateKey(privateKey))
 	skdecode, _ := base64.StdEncoding.DecodeString(sk)

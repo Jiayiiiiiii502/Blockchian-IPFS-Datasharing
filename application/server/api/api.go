@@ -21,10 +21,11 @@ var (
 	sh            = shell.NewShell("127.0.0.1:6001")                             //ipfs api
 )
 
-// Init 初始化
+// Initiation
 func Init() {
 
 	var err error
+	//Initiation SDK by config file
 	// 通过配置文件初始化SDK
 	sdk, err = fabsdk.New(config.FromFile(configPath))
 	if err != nil {
@@ -37,6 +38,8 @@ func GenerateKeyPair() (string, string) {
 	rsakey, _ := rsa.GenerateRsaKeyBase64(1024)
 	return rsakey.PrivateKey, rsakey.PublicKey
 }
+
+// use public key to encrypt IPFS CID and return the encrypted strings
 func EncryptCid(cid string, publicKey string) string {
 	//ecid:encrypted cid
 	ecid, err := rsa.RsaEncryptToBase64([]byte(cid), publicKey)
@@ -46,6 +49,7 @@ func EncryptCid(cid string, publicKey string) string {
 	return ecid
 }
 
+// use private key to decript IPFS CID and return the decrypted strings
 func DecryptCid(ecid string, privatekey string) string {
 	// fmt.Printf("================ecid:%v,sk:%v", ecid, privatekey)
 	cid, err := rsa.RsaDecryptByBase64(ecid, privatekey)
@@ -55,6 +59,7 @@ func DecryptCid(ecid string, privatekey string) string {
 	return string(cid)
 }
 
+// upload file to IPFS network and return the IPFS CID
 func IpfsAdd(filename string) string {
 	ipfsfile, _ := os.Open(fmt.Sprintf("./files/uploadfiles/%v", filename))
 	defer ipfsfile.Close()
@@ -65,6 +70,7 @@ func IpfsAdd(filename string) string {
 	return cid
 }
 
+// Get file by IPFS CID in IPFS network
 func IpfsGet(cid string, filename string) error {
 	// fmt.Printf("cid:%v,filename:%v", cid, filename)
 	err := sh.Get(cid, fmt.Sprintf("./files/downloadfiles/%v", filename))
@@ -76,15 +82,17 @@ func IpfsGet(cid string, filename string) error {
 
 }
 
-// ChannelExecute 区块链交互
+// ChannelExecute interaction of blockchain
 func ChannelExecute(fcn string, args [][]byte) (channel.Response, error) {
 	// 创建客户端，表明在通道的身份
+	// create client end and add to the channel
 	ctx := sdk.ChannelContext(channelName, fabsdk.WithUser(user))
 	cli, err := channel.New(ctx)
 	if err != nil {
 		return channel.Response{}, err
 	}
 	// 对区块链账本的写操作（调用了链码的invoke）
+	//write to blockchain digital ledger, using Invoke function in chaincode
 	resp, err := cli.Execute(channel.Request{
 		ChaincodeID: chainCodeName,
 		Fcn:         fcn,
@@ -93,19 +101,19 @@ func ChannelExecute(fcn string, args [][]byte) (channel.Response, error) {
 	if err != nil {
 		return channel.Response{}, err
 	}
-	//返回链码执行后的结果
+	// only return results from chaincode
 	return resp, nil
 }
 
-// ChannelQuery 区块链查询
+// ChannelQuery Query on blockchain
 func ChannelQuery(fcn string, args [][]byte) (channel.Response, error) {
-	// 创建客户端，表明在通道的身份
+	// create client end and add to the channel
 	ctx := sdk.ChannelContext(channelName, fabsdk.WithUser(user))
 	cli, err := channel.New(ctx)
 	if err != nil {
 		return channel.Response{}, err
 	}
-	// 对区块链账本查询的操作（调用了链码的invoke），只返回结果
+	// Query operation on blockchain ledger, using Invoke function in chaincode
 	resp, err := cli.Query(channel.Request{
 		ChaincodeID: chainCodeName,
 		Fcn:         fcn,
@@ -114,6 +122,6 @@ func ChannelQuery(fcn string, args [][]byte) (channel.Response, error) {
 	if err != nil {
 		return channel.Response{}, err
 	}
-	//返回链码执行后的结果
+	// only return results from chaincode
 	return resp, nil
 }

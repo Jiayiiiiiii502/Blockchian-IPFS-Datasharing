@@ -18,6 +18,7 @@ func SetupRouter() *gin.Engine {
 	r.GET("/downloadfile", con.DownloadFile)
 	r.POST("/upload", con.Upload)
 	r.POST("/getrecords", con.GetRecords)
+	r.POST("/getallsk", con.GetAllSKs)
 	r.POST("/getfile", con.GetFile)
 	r.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", gin.H{

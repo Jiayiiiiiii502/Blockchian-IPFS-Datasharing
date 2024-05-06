@@ -6,5 +6,6 @@ type Record struct {
 	SenderEncryptedCid   string `json:"secid"`
 	RecevierEncryptedCid string `json:"recid"`
 	Filename             string `json:"filename"`
+	Message              string `json:"message"`
 	Timestamp            string `json:"timestamp"`
 }

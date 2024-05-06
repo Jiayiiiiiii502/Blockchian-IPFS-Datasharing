@@ -24,25 +24,25 @@
                 <el-row type="flex" class="row-bg" justify="center">
                     <el-col :span="2">
                         <div class="grid-content"><el-button type="text" icon="el-icon-s-home"
-                                @click=changeRouter("首页")>首页</el-button></div>
+                                @click=changeRouter("首页")>Home</el-button></div>
                     </el-col>
                     <el-col :span="2" :offset=13>
                         <div class="grid-content "><el-button type="text" icon="el-icon-key"
-                                @click=changeRouter("密钥")>密钥</el-button></div>
+                                @click=changeRouter("密钥")>Keys</el-button></div>
                     </el-col>
                     <el-col :span="2">
                         <div class="grid-content"><el-button type="text" icon="el-icon-s-promotion"
-                            @click=changeRouter("发送")>发送</el-button></div>
+                            @click=changeRouter("发送")>Share</el-button></div>
                     </el-col>
                     <el-col :span="2">
                         <div class="grid-content"
                         ><el-button type="text" icon="el-icon-search"
                         @click=changeRouter("查询")
-                            >查询</el-button></div>
+                            >Query</el-button></div>
                     </el-col>
                     <!-- open blockchain browser -->
                     <el-col :span="2">
-                        <div class="grid-content"><el-button type="text" icon="el-icon-discover" @click="openBloBro">区块链浏览器</el-button>
+                        <div class="grid-content"><el-button type="text" icon="el-icon-discover" @click="openBloBro">Blockchain network</el-button>
                         </div>
                     </el-col>
                 </el-row>
@@ -51,11 +51,12 @@
         
         <el-main v-show="this.router=='首页'">
             <div class="texthome">
-                <h1 style="height: 100px;color: #409EFF;">SharingFree</h1>
-                <p style="color:#909399;text-indent:37px ; text-align: left;">本系统使用RSA算法生成密钥对，
-                    RSA私钥用于用户身份认证；用户发送的数据将存储于IPFS，
-                    IPFS返回的CID（IPFS Hash）使用用户的RSA私钥加密后存储于区块链;
-                    区块链部分使用Hyperledger Fabric,并用Hyperledger Explorer追踪交易</p>
+                <h1 style="height: 100px;color: #409EFF;">Blockchain-IPFS based data sharing plaform</h1>
+                <p style="color:#909399;text-indent:37px ; text-align: left;">This system employs the RSA algorithm to generate key pairs.
+                     The RSA private key is utilized for user authentication, with the data transmitted by the user stored in IPFS. 
+                     The CID (IPFS Hash) returned by IPFS is encrypted with the user's RSA private key 
+                     and stored in the blockchain. The blockchain component leverages Hyperledger Fabric 
+                     and utilizes Hyperledger Explorer to track transactions.</p>
             </div>
             <el-row>
                 <!-- <el-col :span="4" :offset=3> -->
@@ -65,11 +66,11 @@
                         <img src="/web/statics/keys.jpeg" class="image"  >
                         <div style="padding:14px 14px 0px 14px;">
                             <div class="cardtext">
-                                <span>本系统使用RSA算法生成密钥对，RSA是被研究得最广泛的公钥算法，普遍被认为是目前最优秀的公钥方案之一。
-                                    本系统中使用的密钥长度为1024位</span>
+                                <span>Using 1024-bites RSA Keys to encrypt your sharing, ensuring
+                                    the safety of your shared files and transmission process.</span>
                             </div>
                             <div class="bottom clearfix" style="border-top: #eaeefb;border-top-width: 1px;border-top-style: solid;" @click="changeRouter('密钥')">
-                                <el-button type="text" class="button" >生成密钥</el-button>
+                                <el-button type="text" class="button" >Generate Keys Now</el-button>
                             </div>
                         </div>
 
@@ -80,10 +81,11 @@
                         <img src="/web/statics/send.jpeg" class="image">
                         <div style="padding:14px 14px 0px 14px;">
                             <div class="cardtext">
-                                <span>使用本系统向朋友发送数据会将数据存入IPFS网络中（IPFS Hash将使用你的私钥加密），传输记录将记入区块链中，永久不可被篡改</span>
+                                <span>Share your files on IPFS network and record on the blockchain network.
+                                    You can check it at any time with any device.</span>
                             </div>
                             <div class="bottom clearfix" style="border-top: #eaeefb;border-top-width: 1px;border-top-style: solid;"@click="changeRouter('发送')">
-                                <el-button type="text" class="button" >发送文件</el-button>
+                                <el-button type="text" class="button" >Try Sharing Now</el-button>
                             </div>
                         </div>
                     </el-card>
@@ -93,10 +95,11 @@
                         <img src="/web/statics/search.jpeg" class="image" >
                         <div style="padding:14px 14px 0px 14px;">
                             <div class="cardtext" >
-                                <span>当你的朋友通知你发送给你文件后，你可以通过本系统查询功能检索你收到的文件，然后点击按钮进行下载，还可以查询此次传输在区块链中的记录</span>
+                                <span>You can query the files shared with you andn download them. 
+                                    Records on the blockchain network are also avaliable.</span>
                             </div>
                             <div class="bottom clearfix" style="border-top: #eaeefb;border-top-width: 1px;border-top-style: solid;" @click="changeRouter('查询')">
-                                <el-button type="text" class="button" >查询文件</el-button>
+                                <el-button type="text" class="button" >Query Now</el-button>
                             </div>
                         </div>
 
@@ -107,10 +110,11 @@
                         <img src="/web/statics/blockchain.jpeg" class="image">
                         <div style="padding:14px 14px 0px 14px;">
                             <div class="cardtext">
-                                <span>使用区块链浏览器可以方便地通过Fabric交易id查询交易详情，包含时间戳、背书策略与读写集等。还可以了解到当前区块链的运行情况</span>
+                                <span>The use of blockchain browsers allows users to conveniently search for transaction details, including timestamps, endorsements, etc. 
+                                    </span>
                             </div>
                             <div class="bottom clearfix" style="border-top: #eaeefb;border-top-width: 1px;border-top-style: solid;" @click="openBloBro">
-                                <el-button type="text" class="button" >区块链浏览器</el-button>
+                                <el-button type="text" class="button" >Blockchain network</el-button>
                             </div>
                         </div>
                     </el-card>
@@ -120,35 +124,38 @@
         </el-main>
         <el-main v-show="this.router=='密钥'">
             <img src="/web/statics/keys.jpeg" alt="" style="height: 200px;margin: 30px;">
-            <h1 style="color: #606266;margin-bottom: 30px;">RSA密钥对生成</h1>
-            <el-button type="primary" @click="getRSAKey">生成密钥对</el-button>
-            <el-button type="primary" @click="restoreRSApk">恢复公钥</el-button>
+            <h1 style="color: #606266;margin-bottom: 30px;">RSA Keys Generations</h1>
+            <el-button type="primary" @click="getRSAKey">Generate key pairs</el-button>
+            <el-button type="primary" @click="restoreRSApk">Recovery public key</el-button>
             <el-dialog :visible.sync="rsa.dialogVisible_gen" width="50%" :data="rsa" fullscreen="">
                 <div style="width: 50%;margin: auto;">
-                <h2 style="color:#F56C6C;">rsa私钥,请勿泄露:</h2>
+                <h2 style="color:#F56C6C;">RSA private key, please do not tell others:</h2>
                 <span style="font-size:smaller;color:#F56C6C;">{{rsa.sk}}</span>
-                <h2 style="color:#67C23A;margin-top: 50px;">rsa公钥,接受文件使用:</h2>
+                <h2 style="color:#67C23A;margin-top: 50px;">RSA public key, only use in sending files:</h2>
                 <span style="font-size: smaller;color: #67C23A;">{{rsa.pk}}</span>
+                <h5>Please note that we will automatically store yout key pairs on the cookie securely.
+                    If you don't need, please reject these cookies.
+                </h5>
                 </div>
                 <span slot="footer" class="dialog-footer">
-                    <el-button type="primary" @click="cleanKey">确 定</el-button>
+                    <el-button type="primary" @click="cleanKey">Yes</el-button>
                 </span>
             </el-dialog>
-            <el-dialog title="请填入私钥" :visible.sync="rsa.dialogVisible_restore" width="50%">
-                <el-input type="textarea" :rows="11" placeholder="请输入内容" v-model="rsa.sk">
+            <el-dialog title="Please enter private key" :visible.sync="rsa.dialogVisible_restore" width="50%">
+                <el-input type="textarea" :rows="11" placeholder="Private key here" v-model="rsa.sk">
                 </el-input>
                 <span slot="footer" class="dialog-footer">
-                    <el-button type="primary" @click="getRSApk()">恢复公钥</el-button></el-button></el-button>
+                    <el-button type="primary" @click="getRSApk()">Recovery</el-button></el-button></el-button>
                 </span>
             </el-dialog>
             <el-dialog :visible.sync="rsa.dialogVisible_restore_suc" width="50%">
                 <div style="width: 50%;margin: auto;">
-                <h2 style="color:#67C23A;margin-top: 50px;">rsa公钥,接受文件使用:</h2>
+                <h2 style="color:#67C23A;margin-top: 50px;">Your RSA public key:</h2>
                 <span style="font-size: smaller;color: #67C23A;">{{rsa.pk}}</span>
                 </div>
                 <span slot="footer" class="dialog-footer">
                     <el-button type="primary"
-                        @click="rsa.dialogVisible_restore_suc=false">确定</el-button></el-button></el-button>
+                        @click="rsa.dialogVisible_restore_suc=false">Yes</el-button></el-button></el-button>
                 </span>
             </el-dialog>
         </el-main>
@@ -157,41 +164,68 @@
             <div style="width: 400px; margin: auto;">
                 <el-form :model="send.sendForm" status-icon ref="send.sendForm" label-width="100px" class="demo-ruleForm"
                     label-position="top" style="text-align: left;"
-                    v-loading="loading" element-loading-text="上传中">
-                    <el-form-item label="接受者公钥" prop="recevierPk">
+                    v-loading="loading" element-loading-text="Uploading, please wait...">
+                    <el-form-item label="Public Key of Receiver " prop="recevierPk">
                         <el-input v-model="send.sendForm.recevier" type="textarea" :rows="2" v-model="textarea"></el-input>
                     </el-form-item>
 
-                    <el-form-item label="发送者私钥" prop="senderSk">
+                    <el-form-item label="Privacy Key of Sender" prop="senderSk">
                         <el-input v-model="send.sendForm.sender" type="textarea" :rows="2" v-model="textarea"></el-input>
                     </el-form-item>
+
+                    <el-form-item label="Attached message" prop="12312">
+                        <el-input v-model="send.sendForm.message" type="textarea" :rows="2" v-model="textarea"></el-input>
+                    </el-form-item>
+
                     <el-form-item>
                         <el-upload class="upload-demo" ref="upload" action="#" :limit="1" :on-exceed="handleExceed"
                             :on-remove="handleRemove" :auto-upload="false">
                             <el-button slot="trigger" size="small" type="primary"
-                                style="margin-top: 10px;margin-bottom: 10px;">选取文件</el-button>
+                                style="margin-top: 10px;margin-bottom: 10px;">Choose File</el-button>
                         </el-upload>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="submitForm('send.sendForm')">提交</el-button>
-                        <el-button @click="resetForm('send.sendForm')">重置</el-button>
+                        <el-button type="primary" @click="submitForm('send.sendForm')">Submit</el-button>
+                        <el-button @click="resetForm('send.sendForm')">Reset</el-button>
                     </el-form-item>
                 </el-form>
                 <el-dialog :visible.sync="send.sendForm.dialogVisible_txid" width="30%" :data="send.sendForm">
-                    <h2 style="color: #67C23A;">区块链交易ID:</h2>
+                    <h2 style="color: #67C23A;">ID of Blockchain Transaction</h2>
                     <span>{{send.sendForm.txid}}</span>
                     <span slot="footer" class="dialog-footer">
-                        <el-button type="primary" @click="goDetails">详 情</el-button></el-button>
+                        <el-button type="primary" @click="goDetails">Details</el-button></el-button>
                     </span>
                 </el-dialog>
             </div>
         </el-main>
         <el-main v-show="this.router=='查询'">
             <img src="/web/statics/search.jpeg" alt="" height="200px" style="height: 200px;margin: 30px;">
-            <div style="width: 400px;margin: auto;" v-loading="loading" element-loading-text="查询中">
-                <el-input type="textarea" :rows="2" placeholder="填入你的私钥" v-model="search.sk">
+            <div style="width: 400px;margin: auto;" v-loading="loading" element-loading-text="Querying, please wait...">
+                <el-input type="textarea" :rows="2" placeholder="Your Privacy Key！～！" v-model="search.sk" @focus="showAutoFillBox">
                 </el-input>
-                <el-button type="primary" plain style="margin: 20px;" @click="getRecords(search.sk)">查询</el-button>
+
+                <div class="auto-fill-container" v-if="showAutoFill">
+                    <div class="auto-fill-content">
+                        <div v-for="(cookieValue, index) in skCookies" :key="index" class="auto-fill-item">
+                            <label class="auto-fill-label">
+                                <input type="checkbox" v-model="selectedCookie[index]" @change="fillInput(index, cookieValue)" class="auto-fill-checkbox">
+                                <span class="auto-fill-cookie">{{ cookieValue.substring(0, 20) }}</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <!-- <div class="auto-fill-container" v-if="showAutoFill">
+                    <div class="auto-fill-content">
+                        <div v-for="(cookieValue,index) in skCookies" :key="index" class="auto-fill-item">
+                            <input type="checkbox" v-model="selectedCookie[index]" @change="fillInput(index,cookieValue)" class="auto-fill-radio">{{ cookieValue }}
+                        </div>
+                    </div>
+                </div> -->
+
+                
+                <el-button type="primary" plain style="margin: 20px;" @click="getRecords(search.sk)">Query</el-button>
                 
             </div>
             <el-dialog
@@ -202,46 +236,52 @@
                     <el-table-column type="expand">
                         <template slot-scope="props">
                             <el-form label-position="left" inline class="demo-table-expand">
-                                <el-form-item label="时间:">
+                                <el-form-item label="Time:">
                                     <span style="text-align: left;">{{ props.row.timestamp }}</span>
                                 </el-form-item>
-                                <el-form-item label="发送者:">
-                                    <span>{{ props.row.sender }} {{props.row.sender==search.pk?"（我）":""}} </span>
+                                <el-form-item label="Public Key of Transaction">
+                                    <span>{{ props.row.sender }} {{props.row.sender==search.pk?"":""}} </span>
                                 </el-form-item>
-                                <el-form-item label="接受者:">
+                                <!-- <el-form-item label="Public Key of Receiver">
                                     <span>{{ props.row.receiver }}{{props.row.receiver==search.pk?"（我）":""}}</span>
-                                </el-form-item>
-                                <el-form-item label="文件名:">
+                                </el-form-item> -->
+                                <el-form-item label="Filename">
                                     <span>{{ props.row.filename }}</span>
                                 </el-form-item>
-                                <el-form-item label="区块链交易ID:">
+                                <el-form-item label="Message">
+                                    <span>{{ props.row.message}}{{props.row.message==search.pk?"（me）":""}}</span>
+                                </el-form-item>
+                                <el-form-item label="ID of Blockchain Transaction">
                                     <span>{{ props.row.txid }}</span>
                                 </el-form-item>
                             </el-form>
                         </template>
                     </el-table-column>
                     
-                    <el-table-column label="序号" type="index">
+                    <el-table-column label="Indedx" type="index">
                     </el-table-column>
-                    <el-table-column label="时间" prop="timestamp">
+                    <el-table-column label="Time" prop="timestamp">
                     </el-table-column>
-                    <el-table-column label="文件名" prop="filename">
+                    <el-table-column label="Filename" prop="filename">
                     </el-table-column>
-                    <el-table-column label="区块链交易ID" prop="txid">
-                    </el-table-column>
+                    <!-- <el-table-column label="区块链交易ID" prop="txid">
+                    </el-table-column> -->
                     <el-table-column
                         fixed="right"
-                        label="操作"
+                        label="Operation"
                         width="100">
                         <template slot-scope="scope">
-                            <el-button @click="searchDownloadlink(scope.row)" type="text" size="small">下载</el-button>
-                            <el-button @click="searchDetails(scope.row)" type="text" size="small">详情</el-button>
+                            <el-button @click="searchDownloadlink(scope.row)" type="text" size="small">Download</el-button>
+                            <el-button @click="searchDetails(scope.row)" type="text" size="small">Details</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
+                <span slot="footer" class="dialog-footer-left">
+                    <el-button type="primary" @click="printTable">Print list</el-button>
+                </span>
                 <span slot="footer" class="dialog-footer">
-                    <el-button type="primary" @click="search.dialogTableVisible = false">确 定</el-button>
-                  </span>
+                    <el-button type="primary" @click="search.dialogTableVisible = false">Back Home</el-button>
+                </span>
             </el-dialog>
 
             
@@ -271,6 +311,7 @@
                     'sender': '',
                     'recevier': '',
                     'file': '',
+                    'message':'',
                     dialogVisible_txid: false,
                     txid: '正在加载...',
                     },
@@ -284,13 +325,15 @@
                     link: '',
                     dialogTableVisible: false
                 },
+                skCookies:[],
+                showAutoFill:false,
+                selectedCookie:[],
                 //public
                 url: 'http://1.14.74.234:9090/',
-                blokchainbrowserurl: 'http://1.14.74.234:8080/'
-                // url: '1.14.74.234:9090/',
-                // blokchainbrowserurl:'1.14.74.234:8080/'
+                blokchainbrowserurl:'http://1.14.74.234:8080/'
             }
         },
+
         computed: {
             //order records by time
             sortrecords() {
@@ -301,28 +344,79 @@
                 return arr
             }
         },
-    
 
-    
         methods: {
+        printTable() {
+        window.print();
+        },
+        printnoTable(){
+            const table = this.$refs.table.$el;
+            const printWindow = window.open("","blank");
+            // Write the table content to the new window
+            printWindow.document.write('<html><head><title>Print Table</title></head><body>');
+            printWindow.document.write('<h1>Table Content</h1>');
+            printWindow.document.write(table.outerHTML);
+            printWindow.document.write('</body></html>');
+      
+            // Print the window
+            printWindow.print();
+            printWindow.close();
+        },
+        autoFillSKFromCookie(){
+            const cookies = document.cookie.split(';')
+            const skCookies = cookies
+                .map(cookie => cookie.trim())
+                .filter(cookie => cookie.startsWith("sk_"))
+                .map(cookie => cookie.split("=")[1]);
+            this.skCookies = skCookies;
+            console.log("skcookies all: ")
+            console.log(skCookies)
+        },
+        showAutoFillBox(){
+            this.autoFillSKFromCookie();
+            this.showAutoFill = true;
+        },
+        fillInput(index,cookieValue){
+            // 切换选中状态
+            console.log("fillinput被调用了")
+            console.log(this.selectedCookie)
+            console.log(index)
+            console.log(this.selectedCookie[index])
+            this.$set(this.selectedCookie, index, !this.selectedCookie[index]);
+            console.log("-------------------")
+            console.log(this.selectedCookie)
+            console.log(index)
+            console.log(this.selectedCookie[index])
+            // 如果选中，则填充输入框
+            if (this.selectedCookie[index]) {
+                this.search.sk = cookieValue;
+            } else {
+                // 如果取消选中，则清空输入框
+                this.search.sk = '';
+            }
+        },
+
         changeRouter(router){
             vm.router=router
         },
 
         //methods of home page
-        // openBloBro(){
-        //     window.open(vm.blokchainbrowserurl)
-        // },
         openBloBro(){
-            setTimeout(() => {
-                window.open(vm.blokchainbrowserurl);
-            }, 1000); // 延迟 1 秒后调用 window.open
+            window.open(vm.blokchainbrowserurl)
         },
         changeFixed(clientHeight){ //动态修改样式
         console.log(clientHeight);
         console.log(window.$refs.page.$el.style.height);
         window.$refs.page.$el.style.height = clientHeight-200+'px';
           },
+        
+        getRandomId(){
+            var timestamp = new Date().getTime();
+            var randomNumber = Math.floor(Math.random()*100000);
+            var uniqueId = timestamp.toString()+randomNumber.toString();
+            return uniqueId;
+        },
+
         //methods of RSAkey page
         getRSAKey() {
             // console.log("222")
@@ -331,6 +425,18 @@
                     vm.rsa.sk = response.data.sk,
                     vm.rsa.pk = response.data.pk
                     vm.rsa.dialogVisible_gen = true
+
+                    var timestamp = new Date().getTime();
+                    var randomNumber = Math.floor(Math.random()*100000);
+                    var uniqueId = timestamp.toString()+randomNumber.toString();
+                    var id = uniqueId;
+                    var expirationDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toUTCString();
+
+                    document.cookie = "sk_" + id + "=" + vm.rsa.sk + ";expires=" + expirationDate + "; path=/";
+                    document.cookie = "pk_" + id + "=" + vm.rsa.pk + ";expires=" + expirationDate + "; path=/";
+
+                    // console.log("all cookie:")
+                    // console.log(document.cookie);
                 }
             ).catch(
                 function(response){
@@ -344,6 +450,7 @@
             vm.rsa.pk = '',
             vm.rsa.dialogVisible_restore = true
         },
+        
         getRSApk() {
             vm.rsa.dialogVisible_restore = false
             axios.post(vm.url + 'rsakeyrestore', { 'sk': vm.rsa.sk }, {
@@ -352,7 +459,8 @@
                 }
             }).then(function (response) {
                 vm.rsa.pk = response.data
-                vm.rsa.dialogVisible_restore_suc = true
+                vm.rsa.dialogVisible_restore_suc = true;
+
             }).catch(
                 function(response){
                     vm.$message.warning(response.response.data)
@@ -386,12 +494,12 @@
                     vm.$message.warning(response.response.data)
                     vm.loading=false
                 },
-                vm.send.sendForm.dialogVisible_txid = false,
-                vm.$message.warning("服务器错误"),
+                // vm.send.sendForm.dialogVisible_txid = false,
+                // vm.$message.warning("服务器错误"),
             );
         },
         handleExceed() {
-            this.$message.warning("一次发送只能选择一个文件")
+            this.$message.warning("Only a file once")
         },
         goDetails: function () {
             window.open(vm.blokchainbrowserurl+"?tab=transactions&transId=" + vm.send.sendForm.txid)
@@ -400,7 +508,8 @@
         resetForm: function () {
             vm.send.sendForm.sender = '',
             vm.send.sendForm.recevier = '',
-            vm.send.sendForm.file = ''
+            vm.send.sendForm.file = '',
+            vm.send.sendForm.message = '',
             vm.$refs.upload._data.uploadFiles=[]
             vm.loading=false
         },

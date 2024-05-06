@@ -1,3 +1,20 @@
+.auto-fill-item {
+  display: flex;
+  align-items: center;
+}
+
+.auto-fill-checkbox {
+  margin-right: 5px; /* 调整复选框和文本之间的间距 */
+}
+
+.auto-fill-cookie {
+  overflow: hidden;
+  text-overflow: ellipsis; /* 使用省略号来表示文本被截断 */
+  white-space: nowrap; /* 防止文本换行 */
+  flex-grow: 1; /* 填充剩余的空间 */
+}
+
+
 .time {
   font-size: 13px;
   color: #999;
@@ -129,3 +146,4 @@
   .el-container:nth-child(7) .el-aside {
     line-height: 320px;
   }
+
