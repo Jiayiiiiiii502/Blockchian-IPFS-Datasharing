@@ -26,7 +26,6 @@ func Init() {
 
 	var err error
 	//Initiation SDK by config file
-	// 通过配置文件初始化SDK
 	sdk, err = fabsdk.New(config.FromFile(configPath))
 	if err != nil {
 		panic(err)
@@ -84,14 +83,12 @@ func IpfsGet(cid string, filename string) error {
 
 // ChannelExecute interaction of blockchain
 func ChannelExecute(fcn string, args [][]byte) (channel.Response, error) {
-	// 创建客户端，表明在通道的身份
 	// create client end and add to the channel
 	ctx := sdk.ChannelContext(channelName, fabsdk.WithUser(user))
 	cli, err := channel.New(ctx)
 	if err != nil {
 		return channel.Response{}, err
 	}
-	// 对区块链账本的写操作（调用了链码的invoke）
 	//write to blockchain digital ledger, using Invoke function in chaincode
 	resp, err := cli.Execute(channel.Request{
 		ChaincodeID: chainCodeName,

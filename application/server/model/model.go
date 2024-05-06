@@ -1,5 +1,6 @@
 package model
 
+// transaction record structure
 type Record struct {
 	Sender               string `form:"sender" json:"sender"`
 	Recevier             string `form:"recevier" json:"recevier"`

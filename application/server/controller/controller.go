@@ -17,6 +17,7 @@ import (
 	"github.com/google/uuid"
 )
 
+// keys config structure
 type ranges struct {
 	start  int64
 	end    int64
@@ -44,53 +45,6 @@ func RestoreKey(c *gin.Context) {
 
 }
 
-// func Upload(c *gin.Context) {
-// 	//save file
-// 	file, _ := c.FormFile("file")
-// 	fmt.Printf("file:%v", fmt.Sprintf("./files/uploadfiles/%v", file.Filename))
-// 	err := c.SaveUploadedFile(file, fmt.Sprintf("./files/uploadfiles/%v", file.Filename))
-// 	if err != nil {
-// 		c.String(http.StatusBadRequest, fmt.Sprintf("file upload failed,err:%v", err))
-// 		return
-// 	}
-// 	// upload to ipfs
-// 	cid := api.IpfsAdd(file.Filename)
-// 	// cid := file.Filename
-
-// 	//assignment record
-// 	var record model.Record
-// 	c.ShouldBind(&record)
-// 	serderpk, err := rsa.SktoPub(record.Sender)
-// 	if err != nil {
-// 		c.String(http.StatusBadRequest, "no sk input")
-// 		return
-// 	}
-// 	record.SenderEncryptedCid = api.EncryptCid(cid, serderpk)
-// 	record.RecevierEncryptedCid = api.EncryptCid(cid, record.Recevier)
-// 	record.Filename = file.Filename
-// 	record.Message = c.PostForm("message")
-
-// 	//upload to fabric
-// 	var args [][]byte
-// 	args = append(args, []byte(serderpk))
-// 	args = append(args, []byte(record.Recevier))
-// 	args = append(args, []byte(record.SenderEncryptedCid))
-// 	args = append(args, []byte(record.RecevierEncryptedCid))
-// 	args = append(args, []byte(record.Filename))
-// 	args = append(args, []byte(record.Message))
-// 	res, err := api.ChannelExecute("sendData", args)
-// 	if err != nil {
-// 		c.String(http.StatusBadRequest, fmt.Sprintf("execute chaincode failed err:%v", err))
-// 		return
-// 	}
-
-// 	//return txid
-// 	c.JSON(http.StatusOK, gin.H{
-// 		"txid": res.TransactionID,
-// 	})
-
-// }
-
 func Upload(c *gin.Context) {
 	//save file
 	file, _ := c.FormFile("file")
@@ -101,54 +55,50 @@ func Upload(c *gin.Context) {
 		return
 	}
 
-	// 检查是否是续传
+	// check is there is need to contitnue upload file
 	rangeHeader := c.GetHeader("Range")
 	var offset int64
 	if rangeHeader != "" {
-		// 解析 Range 头
 		offset, err = parseRangeHeader(rangeHeader)
 		if err != nil {
-			c.String(http.StatusBadRequest, "无效的 Range 头")
+			c.String(http.StatusBadRequest, "Wrong Range head")
 			return
 		}
 	}
 
-	// 打开文件
+	// open the file
 	var dstFile *os.File
 	if offset == 0 {
-		// 如果不是续传，则创建新文件
+		// if not continue, then create new file as ususal
 		dstFile, err = os.Create(fmt.Sprintf("./files/uploadfiles/%v", file.Filename))
 	} else {
-		// 如果是续传，则以追加模式打开已存在的文件
+		// if continue, then open the original file
 		dstFile, err = os.OpenFile(fmt.Sprintf("./files/uploadfiles/%v", file.Filename), os.O_APPEND|os.O_WRONLY, 0644)
 	}
 	if err != nil {
-		c.String(http.StatusInternalServerError, fmt.Sprintf("无法创建或打开文件，错误：%v", err))
+		c.String(http.StatusInternalServerError, fmt.Sprintf("Can not create file or open the , error: %v", err))
 		return
 	}
 	defer dstFile.Close()
 
-	// 保存上传文件到本地
 	srcFile, err := file.Open()
 	if err != nil {
-		c.String(http.StatusInternalServerError, fmt.Sprintf("无法打开上传文件，错误：%v", err))
+		c.String(http.StatusInternalServerError, fmt.Sprintf("Cannot open the file, error:%v", err))
 		return
 	}
 	defer srcFile.Close()
 
-	// 定位到续传的起始位置
 	if offset > 0 {
 		_, err = srcFile.Seek(offset, io.SeekStart)
 		if err != nil {
-			c.String(http.StatusInternalServerError, fmt.Sprintf("无法定位到续传的起始位置，错误：%v", err))
+			c.String(http.StatusInternalServerError, fmt.Sprintf("Cannot find where to start to continue, error:%v", err))
 			return
 		}
 	}
 
-	// 拷贝文件内容
 	_, err = io.Copy(dstFile, srcFile)
 	if err != nil {
-		c.String(http.StatusInternalServerError, fmt.Sprintf("文件拷贝失败，错误：%v", err))
+		c.String(http.StatusInternalServerError, fmt.Sprintf("Faile to load file, error:%v", err))
 		return
 	}
 
@@ -190,16 +140,16 @@ func Upload(c *gin.Context) {
 
 }
 
-// 解析 Range 头
+// Deal with Range head
 func parseRangeHeader(rangeHeader string) (int64, error) {
 	parts := strings.SplitN(rangeHeader, "=", 2)
 	if len(parts) != 2 || parts[0] != "bytes" {
-		return 0, errors.New("无效的 Range 头")
+		return 0, errors.New("Wrong Range head")
 	}
 
 	offset, err := strconv.ParseInt(parts[1], 10, 64)
 	if err != nil {
-		return 0, errors.New("无效的 Range 值")
+		return 0, errors.New("Invalid Range")
 	}
 
 	return offset, nil

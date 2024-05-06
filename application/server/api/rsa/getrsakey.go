@@ -9,22 +9,13 @@ import (
 	"github.com/wumansgy/goEncrypt"
 )
 
-/*
-	Asymmetric encryption requires the generation of a pair of keys rather than a key, so before encryption here you need to get a pair of keys, public and private, respectively
-	Generate the public and private keys all at once
-		Encryption: plaintext to the power E Mod N to output ciphertext
-		Decryption: ciphertext to the power D Mod N outputs plaintext
-
-		Encryption operations take a long time? Encryption is faster
-
-		The data is encrypted and cannot be easily decrypted
-*/
-
+// structure of keys
 type RsaKey struct {
 	PrivateKey string
 	PublicKey  string
 }
 
+// generate paired keyss
 func GenerateRsaKeyBase64(bits int) (RsaKey, error) {
 	if bits != 1024 && bits != 2048 {
 		return RsaKey{}, goEncrypt.ErrRsaBits

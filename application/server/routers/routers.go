@@ -7,11 +7,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// routers and url for client
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
 	r.Use(Cors())
 	r.Static("/web", "../web")
-	// r.LoadHTMLGlob("../web/**/*")
 	r.LoadHTMLFiles("../web/index.html")
 	r.GET("/rsakey", con.GenerateKeyPair)
 	r.POST("/rsakeyrestore", con.RestoreKey)

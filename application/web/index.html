@@ -18,26 +18,25 @@
 
 <body>
     <el-container >
-        <!-- this part is navibar,change page through change router's value -->
         <el-header style="text-align:center; font-size: 18px;">
             <div id="app">
                 <el-row type="flex" class="row-bg" justify="center">
                     <el-col :span="2">
                         <div class="grid-content"><el-button type="text" icon="el-icon-s-home"
-                                @click=changeRouter("首页")>Home</el-button></div>
+                                @click=changeRouter("home")>Home</el-button></div>
                     </el-col>
                     <el-col :span="2" :offset=13>
                         <div class="grid-content "><el-button type="text" icon="el-icon-key"
-                                @click=changeRouter("密钥")>Keys</el-button></div>
+                                @click=changeRouter("secret")>Keys</el-button></div>
                     </el-col>
                     <el-col :span="2">
                         <div class="grid-content"><el-button type="text" icon="el-icon-s-promotion"
-                            @click=changeRouter("发送")>Share</el-button></div>
+                            @click=changeRouter("transport")>Share</el-button></div>
                     </el-col>
                     <el-col :span="2">
                         <div class="grid-content"
                         ><el-button type="text" icon="el-icon-search"
-                        @click=changeRouter("查询")
+                        @click=changeRouter("find")
                             >Query</el-button></div>
                     </el-col>
                     <!-- open blockchain browser -->
@@ -49,7 +48,7 @@
                 
         </el-header>
         
-        <el-main v-show="this.router=='首页'">
+        <el-main v-show="this.router=='home'">
             <div class="texthome">
                 <h1 style="height: 100px;color: #409EFF;">Blockchain-IPFS based data sharing plaform</h1>
                 <p style="color:#909399;text-indent:37px ; text-align: left;">This system employs the RSA algorithm to generate key pairs.
@@ -69,7 +68,7 @@
                                 <span>Using 1024-bites RSA Keys to encrypt your sharing, ensuring
                                     the safety of your shared files and transmission process.</span>
                             </div>
-                            <div class="bottom clearfix" style="border-top: #eaeefb;border-top-width: 1px;border-top-style: solid;" @click="changeRouter('密钥')">
+                            <div class="bottom clearfix" style="border-top: #eaeefb;border-top-width: 1px;border-top-style: solid;" @click="changeRouter('secret')">
                                 <el-button type="text" class="button" >Generate Keys Now</el-button>
                             </div>
                         </div>
@@ -84,7 +83,7 @@
                                 <span>Share your files on IPFS network and record on the blockchain network.
                                     You can check it at any time with any device.</span>
                             </div>
-                            <div class="bottom clearfix" style="border-top: #eaeefb;border-top-width: 1px;border-top-style: solid;"@click="changeRouter('发送')">
+                            <div class="bottom clearfix" style="border-top: #eaeefb;border-top-width: 1px;border-top-style: solid;"@click="changeRouter('transport')">
                                 <el-button type="text" class="button" >Try Sharing Now</el-button>
                             </div>
                         </div>
@@ -98,7 +97,7 @@
                                 <span>You can query the files shared with you andn download them. 
                                     Records on the blockchain network are also avaliable.</span>
                             </div>
-                            <div class="bottom clearfix" style="border-top: #eaeefb;border-top-width: 1px;border-top-style: solid;" @click="changeRouter('查询')">
+                            <div class="bottom clearfix" style="border-top: #eaeefb;border-top-width: 1px;border-top-style: solid;" @click="changeRouter('find')">
                                 <el-button type="text" class="button" >Query Now</el-button>
                             </div>
                         </div>
@@ -122,7 +121,7 @@
                 </div>
             </el-row>
         </el-main>
-        <el-main v-show="this.router=='密钥'">
+        <el-main v-show="this.router=='secret'">
             <img src="/web/statics/keys.jpeg" alt="" style="height: 200px;margin: 30px;">
             <h1 style="color: #606266;margin-bottom: 30px;">RSA Keys Generations</h1>
             <el-button type="primary" @click="getRSAKey">Generate key pairs</el-button>
@@ -159,7 +158,7 @@
                 </span>
             </el-dialog>
         </el-main>
-        <el-main v-show="this.router=='发送'">
+        <el-main v-show="this.router=='transport'">
             <img src="/web/statics/send.jpeg" alt="" height="200px" style="height: 200px;margin: 30px;">
             <div style="width: 400px; margin: auto;">
                 <el-form :model="send.sendForm" status-icon ref="send.sendForm" label-width="100px" class="demo-ruleForm"
@@ -198,7 +197,7 @@
                 </el-dialog>
             </div>
         </el-main>
-        <el-main v-show="this.router=='查询'">
+        <el-main v-show="this.router=='find'">
             <img src="/web/statics/search.jpeg" alt="" height="200px" style="height: 200px;margin: 30px;">
             <div style="width: 400px;margin: auto;" v-loading="loading" element-loading-text="Querying, please wait...">
                 <el-input type="textarea" :rows="2" placeholder="Your Privacy Key！～！" v-model="search.sk" @focus="showAutoFillBox">
@@ -264,8 +263,6 @@
                     </el-table-column>
                     <el-table-column label="Filename" prop="filename">
                     </el-table-column>
-                    <!-- <el-table-column label="区块链交易ID" prop="txid">
-                    </el-table-column> -->
                     <el-table-column
                         fixed="right"
                         label="Operation"
@@ -295,7 +292,7 @@
         data: function () {
             return {
                 // data of home page
-                router: "首页",
+                router: "home",
                 loading:false,
                 //data of RSAkey page
                 rsa: {
@@ -377,8 +374,8 @@
             this.showAutoFill = true;
         },
         fillInput(index,cookieValue){
-            // 切换选中状态
-            console.log("fillinput被调用了")
+            // swtich the content
+            console.log("fillinput is called")
             console.log(this.selectedCookie)
             console.log(index)
             console.log(this.selectedCookie[index])
@@ -387,11 +384,9 @@
             console.log(this.selectedCookie)
             console.log(index)
             console.log(this.selectedCookie[index])
-            // 如果选中，则填充输入框
             if (this.selectedCookie[index]) {
                 this.search.sk = cookieValue;
             } else {
-                // 如果取消选中，则清空输入框
                 this.search.sk = '';
             }
         },
@@ -404,7 +399,7 @@
         openBloBro(){
             window.open(vm.blokchainbrowserurl)
         },
-        changeFixed(clientHeight){ //动态修改样式
+        changeFixed(clientHeight){ 
         console.log(clientHeight);
         console.log(window.$refs.page.$el.style.height);
         window.$refs.page.$el.style.height = clientHeight-200+'px';
@@ -495,7 +490,6 @@
                     vm.loading=false
                 },
                 // vm.send.sendForm.dialogVisible_txid = false,
-                // vm.$message.warning("服务器错误"),
             );
         },
         handleExceed() {

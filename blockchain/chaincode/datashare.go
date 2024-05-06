@@ -65,11 +65,11 @@ func (s *SmartContract) queryRecord(APIstub shim.ChaincodeStubInterface, args []
 }
 
 func (s *SmartContract) sendData(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
-	//验证参数个数
+	//verify the number of args
 	if len(args) != 6 {
 		return shim.Error("Incorrect number of arguments. Expecting 6")
 	}
-	//生成时间戳
+	//generatevtimestamp
 	txtime, err := APIstub.GetTxTimestamp()
 	if err != nil {
 		return shim.Error(err.Error())
@@ -77,9 +77,8 @@ func (s *SmartContract) sendData(APIstub shim.ChaincodeStubInterface, args []str
 	timesecond := txtime.Seconds
 	time := time.Unix(timesecond+28800, 0).Format("2006-01-02 15:04:05")
 
-	//实例化Record结构体并使用传入的参数赋值
 	var record = Record{Sender: args[0], Receiver: args[1], SenderEncrypted_cid: args[2], ReceiverEncrypted_cid: args[3], Filename: args[4], Message: args[5], Timestamp: time, Txid: APIstub.GetTxID()}
-	//将数据传输记录保存到发送方的记录中
+	// transport the data
 	recordsAsBytes_sender, err := APIstub.GetState(args[0])
 	if err != nil {
 		return shim.Error(err.Error())
@@ -94,7 +93,7 @@ func (s *SmartContract) sendData(APIstub shim.ChaincodeStubInterface, args []str
 	//record to fabric
 	APIstub.PutState(args[0], recordsAsBytes_sender)
 
-	//将数据传输记录保存到接受者的记录中
+	// add record to the reciever
 	recordsAsBytes_receiver, err := APIstub.GetState(args[1])
 	if err != nil {
 		return shim.Error(err.Error())

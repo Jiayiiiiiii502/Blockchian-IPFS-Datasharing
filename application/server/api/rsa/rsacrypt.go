@@ -12,14 +12,13 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-/*
-Operation with rsa encryption
-*/
+// Operation with rsa encryption
 func init() {
 	log.SetFormatter(&log.JSONFormatter{})
 	log.SetReportCaller(true)
 }
 
+// encryption
 func rsaEncrypt(plainText, publicKey []byte) (cipherText []byte, err error) {
 	defer func() {
 		if err := recover(); err != nil {
@@ -36,16 +35,7 @@ func rsaEncrypt(plainText, publicKey []byte) (cipherText []byte, err error) {
 		return nil, err
 	}
 	pubSize, plainTextSize := pub.Size(), len(plainText)
-	// EncryptPKCS1v15 encrypts the given message with RSA and the padding
-	// scheme from PKCS #1 v1.5.  The message must be no longer than the
-	// length of the public modulus minus 11 bytes.
-	//
-	// The rand parameter is used as a source of entropy to ensure that
-	// encrypting the same message twice doesn't result in the same
-	// ciphertext.
-	//
-	// WARNING: use of this function to encrypt plaintexts other than
-	// session keys is dangerous. Use RSA OAEP in new protocols.
+
 	offSet, once := 0, pubSize-11
 	buffer := bytes.Buffer{}
 	for offSet < plainTextSize {
@@ -64,6 +54,7 @@ func rsaEncrypt(plainText, publicKey []byte) (cipherText []byte, err error) {
 	return cipherText, nil
 }
 
+// decryption
 func rsaDecrypt(cipherText, privateKey []byte) (plainText []byte, err error) {
 	defer func() {
 		if err := recover(); err != nil {
@@ -98,6 +89,7 @@ func rsaDecrypt(cipherText, privateKey []byte) (plainText []byte, err error) {
 	return plainText, nil
 }
 
+// to base64
 func RsaEncryptToBase64(plainText []byte, base64PubKey string) (base64CipherText string, err error) {
 	pub, err := base64.StdEncoding.DecodeString(base64PubKey)
 	if err != nil {
@@ -110,6 +102,7 @@ func RsaEncryptToBase64(plainText []byte, base64PubKey string) (base64CipherText
 	return base64.StdEncoding.EncodeToString(cipherBytes), nil
 }
 
+// to keys
 func RsaDecryptByBase64(base64CipherText, base64PriKey string) (plainText []byte, err error) {
 	privateBytes, err := base64.StdEncoding.DecodeString(base64PriKey)
 	if err != nil {
