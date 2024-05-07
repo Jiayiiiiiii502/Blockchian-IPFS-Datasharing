@@ -19,7 +19,11 @@ cd application/server
 go run main.go
 ```
 
-3. S
+3. Stop the blockchain network
+```bash
+cd blockchain
+./stop.sh
+```
 
 ### Tape testing
 Under the /blockchain/tape, running the config.yaml with setting number of clients/nodes to specific number
